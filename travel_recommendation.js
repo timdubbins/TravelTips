@@ -7,37 +7,35 @@ $(function () {
   const $clearSearch = $('#clear-btn');
   const $navLinks = $('.navbar a');
 
-  $content.load('home.html', handleSearchContent);
+  $content.load('home.html', handleHomeContent);
 
   $searchInput.on('input', function () {
     $searchIcon.css('display', this.value.length > 0 ? 'none' : 'block');
   });
 
-  $navLinks.click(handleNavLinks);
-
-  function handleNavLinks(e) {
+  $navLinks.click(function (e) {
     e.preventDefault();
     const page = $(this).attr('id');
 
     $content.load(page + '.html', () => {
       switch (page) {
         case 'home':
-          showElement($searchbar);
-          handleSearchContent();
+          handleHomeContent();
           break;
         case 'about':
           hideElement($searchbar);
           break;
         case 'contact':
-          hideElement($searchbar);
-          handleFormSubmission();
+          handleContactContent();
           break;
       }
     });
-  }
+  });
 
-  function handleSearchContent() {
+  function handleHomeContent() {
     const $searchResults = $('#search-results');
+
+    showElement($searchbar);
 
     // console.log(data);
     $submitSearch.click(function () {
@@ -87,21 +85,23 @@ $(function () {
       $submitSearch.click();
     }
   }
+
+  function handleContactContent() {
+    hideElement($searchbar);
+
+    $('#contact-form').submit(function (event) {
+      event.preventDefault();
+
+      $('#contact-alert').fadeIn();
+
+      setTimeout(function () {
+        $('#contact-alert').fadeOut();
+      }, 1500);
+
+      this.reset();
+    });
+  }
 });
-
-const handleFormSubmission = () => {
-  $('#contact-form').submit(function (event) {
-    event.preventDefault();
-
-    $('#contact-alert').fadeIn();
-
-    setTimeout(function () {
-      $('#contact-alert').fadeOut();
-    }, 1500);
-
-    this.reset();
-  });
-};
 
 const hideElement = (selector) => {
   selector.css('visibility', 'hidden');

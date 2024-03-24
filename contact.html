@@ -23,19 +23,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(function () {
-    $('#contact-form').submit(function (event) {
-      event.preventDefault();
-
-      $('#contact-alert').fadeIn();
-
-      setTimeout(function () {
-        $('#contact-alert').fadeOut();
-      }, 1500);
-
-      this.reset();
-    });
-  });
-</script>
